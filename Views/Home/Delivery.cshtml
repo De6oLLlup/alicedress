@@ -1,0 +1,113 @@
+﻿@{
+    ViewData["Title"] = "Доставка и оплата";
+}
+
+<div class="container py-5">
+    <h1 class="h2 fw-bold mb-4">Доставка и оплата</h1>
+
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <!-- Доставка -->
+                    <h3 class="h4 fw-bold mb-3">Доставка</h3>
+
+                    <div class="row mb-4">
+                        <div class="col-md-6 mb-3">
+                            <div class="p-3 border rounded h-100">
+                                <h5 class="fw-bold mb-2">Курьерская доставка</h5>
+                                <p class="mb-2">Доставка курьером по указанному адресу в удобное для вас время.</p>
+                                <ul class="list-unstyled small">
+                                    <li><i class="bi bi-check text-success me-1"></i> Срок: 1-3 рабочих дня</li>
+                                    <li><i class="bi bi-check text-success me-1"></i> Бесплатно от 3000₽</li>
+                                    <li><i class="bi bi-check text-success me-1"></i> До 3000₽ - 300₽</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <div class="p-3 border rounded h-100">
+                                <h5 class="fw-bold mb-2">Самовывоз</h5>
+                                <p class="mb-2">Заберите заказ самостоятельно из нашего магазина.</p>
+                                <ul class="list-unstyled small">
+                                    <li><i class="bi bi-check text-success me-1"></i> Адрес: г. Москва, ул. Примерная, 10</li>
+                                    <li><i class="bi bi-check text-success me-1"></i> Время работы: Пн-Пт 9:00-20:00</li>
+                                    <li><i class="bi bi-check text-success me-1"></i> Бесплатно</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Оплата -->
+                    <h3 class="h4 fw-bold mb-3">Оплата</h3>
+
+                    <div class="row mb-4">
+                        <div class="col-md-6 mb-3">
+                            <div class="p-3 border rounded h-100">
+                                <h5 class="fw-bold mb-2">Банковской картой онлайн</h5>
+                                <p class="mb-2">Оплата картами Visa, MasterCard, МИР через безопасный платежный шлюз.</p>
+                                <div class="payment-icons mt-2">
+                                    <i class="bi bi-credit-card fs-4 me-2"></i>
+                                    <i class="bi bi-credit-card-fill fs-4 me-2"></i>
+                                    <i class="bi bi-wallet2 fs-4"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <div class="p-3 border rounded h-100">
+                                <h5 class="fw-bold mb-2">Наличными при получении</h5>
+                                <p class="mb-2">Оплата наличными курьеру или в пункте самовывоза.</p>
+                                <p class="small text-muted">Доступно только для заказов с доставкой по Москве.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Возврат -->
+                    <h3 class="h4 fw-bold mb-3">Возврат и обмен</h3>
+
+                    <div class="p-3 border rounded mb-4">
+                        <p>Вы можете вернуть или обменять товар в течение 14 дней с момента получения заказа.</p>
+                        <p><strong>Условия возврата:</strong></p>
+                        <ul>
+                            <li>Товар должен быть в оригинальном состоянии</li>
+                            <li>Сохраните все бирки и упаковку</li>
+                            <li>Товар не должен иметь следов носки</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Боковая панель -->
+        <div class="col-lg-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title mb-3">Нужна помощь?</h5>
+
+                    <div class="mb-4">
+                        <h6 class="fw-bold">Телефон поддержки</h6>
+                        <a href="tel:+79991234567" class="btn btn-outline-primary w-100 mb-2">
+                            <i class="bi bi-telephone me-2"></i> +7 (999) 123-45-67
+                        </a>
+                        <p class="small text-muted">Пн-Пт: 9:00-20:00, Сб-Вс: 10:00-18:00</p>
+                    </div>
+
+                    <div class="mb-4">
+                        <h6 class="fw-bold">Email</h6>
+                        <a href="mailto:info@alicedress.ru" class="btn btn-outline-primary w-100">
+                            <i class="bi bi-envelope me-2"></i> info@alicedress.ru
+                        </a>
+                    </div>
+
+                    <div class="mb-4">
+                        <h6 class="fw-bold">Адрес магазина</h6>
+                        <p class="mb-2">г. Москва, ул. Примерная, 10</p>
+                        <p class="small text-muted">Метро: Примерная</p>
+                        <p class="small text-muted">Время работы: Пн-Пт 9:00-20:00</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

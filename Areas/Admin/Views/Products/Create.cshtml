@@ -1,0 +1,212 @@
+﻿@model alicedress.Areas.Admin.ViewModels.ProductViewModel
+@{
+    ViewData["Title"] = "Добавить товар";
+}
+
+<div class="container-fluid">
+    <div class="row mb-4">
+        <div class="col-12">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a asp-area="Admin" asp-controller="Dashboard" asp-action="Index">Дашборд</a></li>
+                    <li class="breadcrumb-item"><a asp-area="Admin" asp-controller="Products" asp-action="Index">Товары</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Добавить товар</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">Добавить новый товар</h5>
+                </div>
+                <div class="card-body">
+                    <form asp-area="Admin" asp-controller="Products" asp-action="Create" method="post" enctype="multipart/form-data" id="createProductForm">
+                        @Html.AntiForgeryToken()
+
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="mb-3">
+                                    <label asp-for="Name" class="form-label">Название товара *</label>
+                                    <input asp-for="Name" class="form-control" placeholder="Введите название товара" />
+                                    <span asp-validation-for="Name" class="text-danger small"></span>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label asp-for="Description" class="form-label">Описание</label>
+                                    <textarea asp-for="Description" class="form-control" rows="4" placeholder="Введите описание товара"></textarea>
+                                    <span asp-validation-for="Description" class="text-danger small"></span>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label asp-for="Price" class="form-label">Цена *</label>
+                                        <div class="input-group">
+                                            <input asp-for="Price" type="number" step="0.01" class="form-control" placeholder="0.00" />
+                                            <span class="input-group-text">₽</span>
+                                        </div>
+                                        <span asp-validation-for="Price" class="text-danger small"></span>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label asp-for="Category" class="form-label">Категория</label>
+                                        <input asp-for="Category" class="form-control" placeholder="Например: Платья" />
+                                        <span asp-validation-for="Category" class="text-danger small"></span>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label asp-for="Article" class="form-label">Артикул</label>
+                                        <input asp-for="Article" class="form-control" placeholder="Например: DRESS-001" />
+                                        <span asp-validation-for="Article" class="text-danger small"></span>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label asp-for="StockQuantity" class="form-label">Количество на складе</label>
+                                        <input asp-for="StockQuantity" type="number" class="form-control" placeholder="100" />
+                                        <span asp-validation-for="StockQuantity" class="text-danger small"></span>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label asp-for="Composition" class="form-label">Состав</label>
+                                    <textarea asp-for="Composition" class="form-control" rows="2" placeholder="Например: Хлопок 95%, Эластан 5%"></textarea>
+                                    <span asp-validation-for="Composition" class="text-danger small"></span>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label asp-for="Images" class="form-label">Изображения товара</label>
+                                    <input asp-for="Images" type="file" multiple class="form-control" accept="image/*" />
+                                    <small class="form-text text-muted">Можно загрузить несколько изображений (JPG, PNG, GIF, WebP)</small>
+                                    <div id="imagePreview" class="row mt-3 g-2"></div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h6 class="mb-0">Настройки</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="mb-3">
+                                            <div class="form-check form-switch">
+                                                <input asp-for="IsActive" class="form-check-input" type="checkbox" checked>
+                                                <label asp-for="IsActive" class="form-check-label">Активный товар</label>
+                                            </div>
+                                            <small class="form-text text-muted">Неактивные товары не отображаются в каталоге</small>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <div class="form-check form-switch">
+                                                <input asp-for="IsBestseller" class="form-check-input" type="checkbox">
+                                                <label asp-for="IsBestseller" class="form-check-label">Бестселлер</label>
+                                            </div>
+                                            <small class="form-text text-muted">Бестселлеры отображаются на главной странице</small>
+                                        </div>
+
+                                        <hr>
+
+                                        <div class="d-grid gap-2">
+                                            <button type="submit" class="btn btn-success">
+                                                <i class="bi bi-save"></i> Сохранить товар
+                                            </button>
+                                            <a asp-area="Admin" asp-controller="Products" asp-action="Index" class="btn btn-outline-secondary">
+                                                <i class="bi bi-x-circle"></i> Отмена
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="card mt-3">
+                                    <div class="card-header">
+                                        <h6 class="mb-0">Информация</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <p class="small text-muted mb-2">
+                                            <i class="bi bi-info-circle me-1"></i> Поля помеченные * обязательны для заполнения
+                                        </p>
+                                        <p class="small text-muted mb-0">
+                                            После сохранения вы сможете:
+                                        </p>
+                                        <ul class="small text-muted mb-0">
+                                            <li>Редактировать товар</li>
+                                            <li>Добавить дополнительные изображения</li>
+                                            <li>Управлять отзывами</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            // Предпросмотр изображений
+            $('#Images').on('change', function(e) {
+                const preview = $('#imagePreview');
+                preview.empty();
+
+                const files = e.target.files;
+                for (let i = 0; i < Math.min(files.length, 5); i++) {
+                    const file = files[i];
+                    const reader = new FileReader();
+
+                    reader.onload = function(e) {
+                        const col = $('<div>').addClass('col-6 col-md-4 col-lg-3 mb-2');
+                        const card = $('<div>').addClass('card h-100');
+                        const img = $('<img>')
+                            .attr('src', e.target.result)
+                            .addClass('card-img-top')
+                            .css({
+                                'height': '120px',
+                                'object-fit': 'cover'
+                            });
+
+                        const cardBody = $('<div>').addClass('card-body p-2');
+                        const fileName = $('<small>')
+                            .addClass('text-muted text-truncate d-block')
+                            .text(file.name.length > 20 ? file.name.substring(0, 20) + '...' : file.name);
+
+                        cardBody.append(fileName);
+                        card.append(img).append(cardBody);
+                        col.append(card);
+                        preview.append(col);
+                    }
+
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            // Валидация формы
+            $('#createProductForm').on('submit', function(e) {
+                const name = $('#Name').val().trim();
+                const price = $('#Price').val();
+
+                if (!name) {
+                    e.preventDefault();
+                    alert('Пожалуйста, введите название товара');
+                    return false;
+                }
+
+                if (!price || parseFloat(price) <= 0) {
+                    e.preventDefault();
+                    alert('Пожалуйста, введите корректную цену');
+                    return false;
+                }
+
+                return true;
+            });
+        });
+    </script>
+
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,0 +1,87 @@
+/* Дополнительные стили для изображений товаров */
+.product-image-container {
+    position: relative;
+    overflow: hidden;
+    height: 250px;
+    background-color: #f8f9fa;
+}
+
+.product-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.product-card:hover .product-image {
+    transform: scale(1.05);
+}
+
+.product-title {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    min-height: 48px;
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.badge-best, .badge-new {
+    position: absolute;
+    top: 10px;
+    z-index: 1;
+}
+
+.badge-best {
+    left: 10px;
+}
+
+.badge-new {
+    right: 10px;
+}
+
+/* Галерея товара */
+.product-gallery .main-image {
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    overflow: hidden;
+    aspect-ratio: 3/4;
+    background: #f8f9fa;
+}
+
+    .product-gallery .main-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+.product-gallery .thumbnail {
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: all 0.2s;
+}
+
+    .product-gallery .thumbnail img {
+        width: 100%;
+        height: 80px;
+        object-fit: cover;
+    }
+
+    .product-gallery .thumbnail:hover,
+    .product-gallery .thumbnail.active {
+        border-color: #0d6efd;
+    }
+
+/* Карточки товаров */
+.product-card {
+    border: 1px solid rgba(0,0,0,.125);
+    border-radius: 8px;
+    transition: box-shadow 0.3s, transform 0.3s;
+    height: 100%;
+}
+
+    .product-card:hover {
+        box-shadow: 0 .5rem 1rem rgba(0,0,0,.15);
+        transform: translateY(-5px);
+    }

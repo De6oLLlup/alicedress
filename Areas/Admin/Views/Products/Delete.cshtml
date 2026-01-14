@@ -1,0 +1,166 @@
+﻿@model alicedress.Models.Product
+@{
+    ViewData["Title"] = "Удалить товар";
+}
+
+<div class="container-fluid">
+    <div class="row mb-4">
+        <div class="col-12">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a asp-area="Admin" asp-controller="Dashboard" asp-action="Index">Дашборд</a></li>
+                    <li class="breadcrumb-item"><a asp-area="Admin" asp-controller="Products" asp-action="Index">Товары</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Удалить товар</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header bg-danger text-white">
+                    <h5 class="card-title mb-0">
+                        <i class="bi bi-exclamation-triangle"></i> Подтверждение удаления
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-danger">
+                        <h6><i class="bi bi-exclamation-octagon"></i> Внимание!</h6>
+                        <p class="mb-0">Вы собираетесь удалить товар. Это действие нельзя отменить.</p>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-8">
+                            <h4>@Model.Name</h4>
+                            <table class="table table-bordered">
+                                <tr>
+                                    <th style="width: 30%">ID товара</th>
+                                    <td>@Model.Id</td>
+                                </tr>
+                                <tr>
+                                    <th>Артикул</th>
+                                    <td>@Model.Article</td>
+                                </tr>
+                                <tr>
+                                    <th>Категория</th>
+                                    <td>@Model.Category</td>
+                                </tr>
+                                <tr>
+                                    <th>Цена</th>
+                                    <td>@Model.Price.ToString("N0") ₽</td>
+                                </tr>
+                                <tr>
+                                    <th>Количество на складе</th>
+                                    <td>@Model.StockQuantity шт</td>
+                                </tr>
+                                <tr>
+                                    <th>Статус</th>
+                                    <td>
+                                        @if (Model.IsActive)
+                                        {
+                                            <span class="badge bg-success">Активен</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-secondary">Не активен</span>
+                                        }
+                                        @if (Model.IsBestseller)
+                                        {
+                                            <span class="badge bg-danger ms-1">Бестселлер</span>
+                                        }
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Дата создания</th>
+                                    <td>@Model.CreatedDate.ToString("dd.MM.yyyy HH:mm")</td>
+                                </tr>
+                            </table>
+
+                            @if (!string.IsNullOrEmpty(Model.Description))
+                            {
+                                <div class="mb-3">
+                                    <h6>Описание:</h6>
+                                    <p class="text-muted">@Model.Description</p>
+                                </div>
+                            }
+
+                            @if (!string.IsNullOrEmpty(Model.Composition))
+                            {
+                                <div class="mb-3">
+                                    <h6>Состав:</h6>
+                                    <p class="text-muted">@Model.Composition</p>
+                                </div>
+                            }
+                        </div>
+
+                        <div class="col-md-4">
+                            <!-- Изображения товара -->
+                            @if (Model.Images.Any())
+                            {
+                                <div class="card mb-3">
+                                    <div class="card-header">
+                                        <h6 class="mb-0">Изображения товара</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row g-2">
+                                            @foreach (var image in Model.Images.Take(3))
+                                            {
+                                                <div class="col-6">
+                                                    <img src="@image.ImageUrl" class="img-fluid rounded border" alt="Изображение товара">
+                                                </div>
+                                            }
+                                        </div>
+                                        <p class="small text-muted mt-2 mb-0">
+                                            Будет удалено изображений: @Model.Images.Count
+                                        </p>
+                                    </div>
+                                </div>
+                            }
+
+                            <!-- Предупреждения -->
+                            <div class="card border-warning">
+                                <div class="card-header bg-warning text-dark">
+                                    <h6 class="mb-0">Последствия удаления</h6>
+                                </div>
+                                <div class="card-body">
+                                    <ul class="small mb-0">
+                                        <li>Товар исчезнет из каталога</li>
+                                        <li>Все изображения будут удалены</li>
+                                        <li>Отзывы о товаре будут удалены</li>
+                                        <li>Действие необратимо</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-4">
+                        <form asp-area="Admin" asp-controller="Products" asp-action="Delete" method="post">
+                            <input type="hidden" asp-for="Id" />
+                            @Html.AntiForgeryToken()
+
+                            <div class="d-flex justify-content-between">
+                                <a asp-area="Admin" asp-controller="Products" asp-action="Index"
+                                   class="btn btn-outline-secondary">
+                                    <i class="bi bi-arrow-left"></i> Вернуться к списку
+                                </a>
+
+                                <div class="btn-group">
+                                    <a asp-area="Admin" asp-controller="Products" asp-action="Edit"
+                                       asp-route-id="@Model.Id" class="btn btn-warning">
+                                        <i class="bi bi-pencil"></i> Редактировать вместо удаления
+                                    </a>
+                                    <button type="submit" class="btn btn-danger"
+                                            onclick="return confirm('Вы уверены, что хотите удалить этот товар?')">
+                                        <i class="bi bi-trash"></i> Да, удалить товар
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

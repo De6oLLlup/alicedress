@@ -1,0 +1,60 @@
+﻿@{
+    ViewData["Title"] = "Отладка корзины";
+    Layout = "_Layout";
+}
+
+<div class="container py-5">
+    <h1>Отладка корзины</h1>
+
+    <div class="card mt-4">
+        <div class="card-body">
+            <h5 class="card-title">Информация о сессии</h5>
+            <p><strong>ID сессии:</strong> @ViewBag.SessionId</p>
+            <p><strong>JSON корзины:</strong> @ViewBag.CartJson</p>
+        </div>
+    </div>
+
+    <div class="card mt-4">
+        <div class="card-body">
+            <h5 class="card-title">Элементы корзины</h5>
+            @if (ViewBag.CartItems != null)
+            {
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>ProductId</th>
+                            <th>Название</th>
+                            <th>Цена</th>
+                            <th>Количество</th>
+                            <th>Размер</th>
+                            <th>Цвет</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in ViewBag.CartItems as List<alicedress.Models.CartItem>)
+                        {
+                            <tr>
+                                <td>@item.ProductId</td>
+                                <td>@item.ProductName</td>
+                                <td>@item.Price</td>
+                                <td>@item.Quantity</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <p>Корзина пуста</p>
+            }
+        </div>
+    </div>
+
+    <div class="mt-4">
+        <a href="/Cart" class="btn btn-primary">Вернуться в корзину</a>
+        <form method="post" asp-action="ClearCart" class="d-inline">
+            <button type="submit" class="btn btn-danger">Очистить корзину</button>
+        </form>
+        <a href="/Catalog" class="btn btn-outline-secondary">В каталог</a>
+    </div>
+</div>

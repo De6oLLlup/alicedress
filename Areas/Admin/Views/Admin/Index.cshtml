@@ -1,0 +1,50 @@
+﻿@{
+    ViewData["Title"] = "Админ-панель";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid">
+    <h1>Административная панель Alice Dress</h1>
+
+    <div class="row mt-4">
+        <div class="col-md-3 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Товары</h5>
+                    <p class="card-text">Управление товарами магазина</p>
+                    <a href="/Admin/Products" class="btn btn-primary">Перейти</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Заказы</h5>
+                    <p class="card-text">Управление заказами клиентов</p>
+                    <a href="/Admin/Orders" class="btn btn-primary">Перейти</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Пользователи</h5>
+                    <p class="card-text">Управление пользователями</p>
+                    <a href="/Admin/Users" class="btn btn-primary">Перейти</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Статистика</h5>
+                    <p class="card-text">Аналитика магазина</p>
+                    <a href="/Admin/Statistics" class="btn btn-primary">Перейти</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

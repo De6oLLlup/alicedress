@@ -1,0 +1,150 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+<header>
+    <!-- Верхняя панель -->
+    <div class="top-header bg-light py-2 d-none d-md-block">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <div class="contact-info">
+                        <span class="me-3"><i class="bi bi-telephone"></i> +7 (999) 123-45-67</span>
+                        <span><i class="bi bi-envelope"></i> info@alicedress.ru</span>
+                    </div>
+                </div>
+                <div class="col-md-6 text-end">
+                    <div class="auth-links">
+                        @if (SignInManager.IsSignedIn(User))
+                        {
+                            var user = await UserManager.GetUserAsync(User);
+                            var userRoles = await UserManager.GetRolesAsync(user);
+
+                            <span class="me-3">Добро пожаловать, @user.FirstName!</span>
+                            @if (userRoles.Contains("Admin"))
+                            {
+                                <a href="/Admin" class="me-2 text-danger">
+                                    <i class="bi bi-shield-check"></i> Админ-панель
+                                </a>
+                            }
+                            <a asp-area="Identity" asp-page="/Account/Manage/Index" class="me-2">
+                                <i class="bi bi-person"></i> Профиль
+                            </a>
+                            <form asp-area="Identity" asp-page="/Account/Logout" method="post" class="d-inline">
+                                <button type="submit" class="btn btn-link p-0">Выйти</button>
+                            </form>
+                        }
+                        else
+                        {
+                            <a asp-area="Identity" asp-page="/Account/Register" class="me-3">Регистрация</a>
+                            <a asp-area="Identity" asp-page="/Account/Login">Войти</a>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Основная навигация -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm py-3">
+        <div class="container">
+            <!-- Логотип -->
+            <a class="navbar-brand" asp-controller="Home" asp-action="Index">
+                <div class="d-flex align-items-center">
+                    <i class="bi bi-flower1 me-2 text-primary fs-4"></i>
+                    <span class="brand-name fs-3 fw-bold">Alice Dress</span>
+                </div>
+            </a>
+
+            <!-- Кнопка для мобильных -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- Основное меню -->
+            <div class="collapse navbar-collapse" id="navbarContent">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" asp-controller="Home" asp-action="Index">Главная</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="catalogDropdown" data-bs-toggle="dropdown">
+                            Каталог
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">Платья</a></li>
+                            <li><a class="dropdown-item" href="#">Блузки</a></li>
+                            <li><a class="dropdown-item" href="#">Юбки</a></li>
+                            <li><a class="dropdown-item" href="#">Брюки</a></li>
+                            <li><a class="dropdown-item" href="#">Костюмы</a></li>
+                            <li><a class="dropdown-item" asp-controller="Catalog" asp-action="Index">Все товары</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Home" asp-action="Index" asp-fragment="about">О нас</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Home" asp-action="Index" asp-fragment="delivery">Доставка</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Home" asp-action="Index" asp-fragment="contacts">Контакты</a>
+                    </li>
+                </ul>
+
+                <!-- Иконки действий -->
+                <div class="d-flex align-items-center">
+                    <!-- Поиск -->
+                    <div class="search-box me-3">
+                        <form class="d-flex" asp-controller="Catalog" asp-action="Index" method="get">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Поиск..." name="search">
+                                <button class="btn btn-outline-primary" type="submit">
+                                    <i class="bi bi-search"></i>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Корзина -->
+                    <a class="btn btn-outline-primary position-relative me-2" asp-controller="Cart" asp-action="Index">
+                        <i class="bi bi-bag"></i>
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                            0
+                            <span class="visually-hidden">товаров в корзине</span>
+                        </span>
+                    </a>
+
+                    <!-- Избранное (опционально) -->
+                    <a class="btn btn-outline-primary me-2" href="#">
+                        <i class="bi bi-heart"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Хлебные крошки -->
+    <div class="breadcrumb-bar bg-light py-2">
+        <div class="container">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb mb-0">
+                    <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Главная</a></li>
+                    @if (ViewContext.RouteData.Values["controller"]?.ToString() != "Home")
+                    {
+                        <li class="breadcrumb-item">
+                            <a asp-controller="@ViewContext.RouteData.Values["controller"]"
+                               asp-action="Index">
+                                @ViewContext.RouteData.Values["controller"]
+                            </a>
+                        </li>
+                    }
+                    @if (ViewContext.RouteData.Values["action"]?.ToString() != "Index")
+                    {
+                        <li class="breadcrumb-item active" aria-current="page">
+                            @ViewContext.RouteData.Values["action"]
+                        </li>
+                    }
+                </ol>
+            </nav>
+        </div>
+    </div>
+</header>

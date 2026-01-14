@@ -1,0 +1,265 @@
+﻿@model alicedress.Models.Product
+@{
+    ViewData["Title"] = "Детали товара";
+}
+
+<div class="container-fluid">
+    <div class="row mb-4">
+        <div class="col-12">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a asp-area="Admin" asp-controller="Dashboard" asp-action="Index">Дашборд</a></li>
+                    <li class="breadcrumb-item"><a asp-area="Admin" asp-controller="Products" asp-action="Index">Товары</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">@Model.Name</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center">
+                <h1 class="h3">Детали товара</h1>
+                <div class="btn-group">
+                    <a asp-area="Admin" asp-controller="Products" asp-action="Edit"
+                       asp-route-id="@Model.Id" class="btn btn-warning">
+                        <i class="bi bi-pencil"></i> Редактировать
+                    </a>
+                    <a asp-area="Admin" asp-controller="Products" asp-action="Delete"
+                       asp-route-id="@Model.Id" class="btn btn-danger">
+                        <i class="bi bi-trash"></i> Удалить
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">Основная информация</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <strong>ID товара:</strong>
+                        </div>
+                        <div class="col-md-8">
+                            @Model.Id
+                        </div>
+                    </div>
+
+                    <div class="row mt-2">
+                        <div class="col-md-4">
+                            <strong>Название:</strong>
+                        </div>
+                        <div class="col-md-8">
+                            @Model.Name
+                            @if (Model.IsBestseller)
+                            {
+                                <span class="badge bg-danger ms-2">Бестселлер</span>
+                            }
+                        </div>
+                    </div>
+
+                    <div class="row mt-2">
+                        <div class="col-md-4">
+                            <strong>Артикул:</strong>
+                        </div>
+                        <div class="col-md-8">
+                            @Model.Article
+                        </div>
+                    </div>
+
+                    <div class="row mt-2">
+                        <div class="col-md-4">
+                            <strong>Категория:</strong>
+                        </div>
+                        <div class="col-md-8">
+                            @Model.Category
+                        </div>
+                    </div>
+
+                    <div class="row mt-2">
+                        <div class="col-md-4">
+                            <strong>Цена:</strong>
+                        </div>
+                        <div class="col-md-8">
+                            <span class="fw-bold text-primary">@Model.Price.ToString("N0") ₽</span>
+                        </div>
+                    </div>
+
+                    <div class="row mt-2">
+                        <div class="col-md-4">
+                            <strong>Остаток на складе:</strong>
+                        </div>
+                        <div class="col-md-8">
+                            <span class="@(Model.StockQuantity < 10 ? "text-danger fw-bold" : "text-success")">
+                                @Model.StockQuantity шт
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="row mt-2">
+                        <div class="col-md-4">
+                            <strong>Статус:</strong>
+                        </div>
+                        <div class="col-md-8">
+                            @if (Model.IsActive)
+                            {
+                                <span class="badge bg-success">Активен</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-secondary">Не активен</span>
+                            }
+                        </div>
+                    </div>
+
+                    <div class="row mt-2">
+                        <div class="col-md-4">
+                            <strong>Дата создания:</strong>
+                        </div>
+                        <div class="col-md-8">
+                            @Model.CreatedDate.ToString("dd.MM.yyyy HH:mm")
+                        </div>
+                    </div>
+
+                    @if (!string.IsNullOrEmpty(Model.Description))
+                    {
+                        <div class="row mt-2">
+                            <div class="col-md-4">
+                                <strong>Описание:</strong>
+                            </div>
+                            <div class="col-md-8">
+                                <p class="text-muted">@Model.Description</p>
+                            </div>
+                        </div>
+                    }
+
+                    @if (!string.IsNullOrEmpty(Model.Composition))
+                    {
+                        <div class="row mt-2">
+                            <div class="col-md-4">
+                                <strong>Состав:</strong>
+                            </div>
+                            <div class="col-md-8">
+                                <p class="text-muted">@Model.Composition</p>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <!-- Отзывы -->
+            @if (Model.Reviews.Any())
+            {
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">Отзывы (@Model.Reviews.Count)</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-sm">
+                                <thead>
+                                    <tr>
+                                        <th>Оценка</th>
+                                        <th>Комментарий</th>
+                                        <th>Дата</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var review in Model.Reviews.OrderByDescending(r => r.CreatedDate))
+                                    {
+                                        <tr>
+                                            <td>
+                                                @for (int i = 1; i <= 5; i++)
+                                                {
+                                                    <i class="bi @(i <= review.Rating ? "bi-star-fill text-warning" : "bi-star")"></i>
+                                                }
+                                                (@review.Rating)
+                                            </td>
+                                            <td>@review.Comment</td>
+                                            <td>@review.CreatedDate.ToString("dd.MM.yyyy")</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <div class="col-md-4">
+            <!-- Изображения -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">Изображения товара</h5>
+                </div>
+                <div class="card-body">
+                    @if (Model.Images.Any())
+                    {
+                        <div class="row g-2">
+                            @foreach (var image in Model.Images.OrderBy(i => i.DisplayOrder))
+                            {
+                                <div class="col-6">
+                                    <a href="@image.ImageUrl" target="_blank">
+                                        <img src="@image.ImageUrl"
+                                             class="img-fluid rounded border"
+                                             alt="Изображение товара"
+                                             style="height: 150px; object-fit: cover;">
+                                    </a>
+                                    <small class="d-block text-center text-muted mt-1">
+                                        Порядок: @image.DisplayOrder
+                                    </small>
+                                </div>
+                            }
+                        </div>
+                        <p class="small text-muted mt-2 mb-0">
+                            Всего изображений: @Model.Images.Count
+                        </p>
+                    }
+                    else
+                    {
+                        <div class="text-center py-4">
+                            <i class="bi bi-image display-6 text-muted"></i>
+                            <p class="text-muted mt-2">Нет изображений</p>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <!-- Быстрые действия -->
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">Действия</h5>
+                </div>
+                <div class="card-body">
+                    <div class="d-grid gap-2">
+                        <a asp-area="Admin" asp-controller="Products" asp-action="Edit"
+                           asp-route-id="@Model.Id" class="btn btn-warning">
+                            <i class="bi bi-pencil"></i> Редактировать товар
+                        </a>
+
+                        <a asp-area="Admin" asp-controller="Products" asp-action="Delete"
+                           asp-route-id="@Model.Id" class="btn btn-danger">
+                            <i class="bi bi-trash"></i> Удалить товар
+                        </a>
+
+                        <a asp-area="Admin" asp-controller="Products" asp-action="Index"
+                           class="btn btn-outline-secondary">
+                            <i class="bi bi-list"></i> К списку товаров
+                        </a>
+
+                        <a href="@Url.Action("Details", "Product", new { area = "", id = Model.Id })"
+                           class="btn btn-info" target="_blank">
+                            <i class="bi bi-eye"></i> Посмотреть на сайте
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

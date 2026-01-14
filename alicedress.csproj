@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>aspnet-alicedress-d0cc19c0-82d3-4332-97af-9d7b6611678e</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="bootstrap" Version="5.3.0" />
+    <PackageReference Include="BootstrapIcons.AspNetCore" Version="1.13.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="8.0.22" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.22" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="8.0.22" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.22" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.22" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Models\Entites\" />
+    <Folder Include="wwwroot\images\products\" />
+    <Folder Include="wwwroot\images\no-image\" />
+  </ItemGroup>
+
+</Project>

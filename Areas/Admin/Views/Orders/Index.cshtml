@@ -1,0 +1,166 @@
+﻿@model IEnumerable<alicedress.Models.Order>
+
+@{
+    ViewData["Title"] = "Управление заказами";
+    Layout = "_AdminLayout";
+}
+
+<div class="page-header">
+    <div class="d-flex justify-content-between align-items-center">
+        <div>
+            <h1 class="h3 mb-0">
+                <i class="bi bi-cart me-2"></i>Заказы
+            </h1>
+            <p class="text-muted mb-0">Управление заказами покупателей</p>
+        </div>
+        <div class="btn-group">
+            <button type="button" class="btn btn-outline-success btn-admin" onclick="exportOrders()">
+                <i class="bi bi-download me-1"></i>Экспорт
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Фильтры -->
+<div class="card mb-4">
+    <div class="card-body">
+        <form method="get" class="row g-3">
+            <div class="col-md-3">
+                <label class="form-label">Статус</label>
+                <select name="status" class="form-select" onchange="this.form.submit()">
+                    @foreach (var status in ViewBag.Statuses)
+                    {
+                        <option value="@status" selected="@(ViewBag.CurrentStatus == status)">@status</option>
+                    }
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label class="form-label">Период</label>
+                <select name="date" class="form-select" onchange="this.form.submit()">
+                    <option value="">Все время</option>
+                    <option value="today" selected="@(ViewBag.CurrentDate == "today")">Сегодня</option>
+                    <option value="week" selected="@(ViewBag.CurrentDate == "week")">За неделю</option>
+                    <option value="month" selected="@(ViewBag.CurrentDate == "month")">За месяц</option>
+                </select>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="table-container">
+    <table class="table data-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Дата</th>
+                <th>Покупатель</th>
+                <th>Телефон</th>
+                <th>Товаров</th>
+                <th>Сумма</th>
+                <th>Статус</th>
+                <th>Действия</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>#@item.Id</td>
+                    <td>@item.OrderDate.ToString("dd.MM.yyyy HH:mm")</td>
+                    <td>@item.CustomerName</td>
+                    <td>@item.CustomerPhone</td>
+                    <td>@item.OrderItems?.Count ?? 0</td>
+                    <td>@item.TotalAmount.ToString("N0") ₽</td>
+                    <td>
+                        <span class="badge bg-@GetStatusColor(item.Status)">@item.Status</span>
+                    </td>
+                    <td>
+                        <div class="btn-group btn-group-sm">
+                            <a asp-action="Details" asp-route-id="@item.Id"
+                               class="btn btn-outline-info" title="Детали">
+                                <i class="bi bi-eye"></i>
+                            </a>
+                            <div class="dropdown">
+                                <button class="btn btn-outline-secondary dropdown-toggle"
+                                        type="button" data-bs-toggle="dropdown">
+                                    <i class="bi bi-gear"></i>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a class="dropdown-item" href="#"
+                                           onclick="updateOrderStatus(@item.Id, 'Новый')">
+                                            <i class="bi bi-clock text-warning"></i> Новый
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="#"
+                                           onclick="updateOrderStatus(@item.Id, 'В обработке')">
+                                            <i class="bi bi-arrow-repeat text-info"></i> В обработке
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="#"
+                                           onclick="updateOrderStatus(@item.Id, 'Выполнен')">
+                                            <i class="bi bi-check-circle text-success"></i> Выполнен
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="#"
+                                           onclick="updateOrderStatus(@item.Id, 'Отменен')">
+                                            <i class="bi bi-x-circle text-danger"></i> Отменен
+                                        </a>
+                                    </li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li>
+                                        <a class="dropdown-item text-danger" href="#"
+                                           onclick="confirmDelete(@item.Id, 'заказ')">
+                                            <i class="bi bi-trash"></i> Удалить
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <form id="deleteForm-@item.Id"
+                                  asp-action="Delete"
+                                  asp-route-id="@item.Id"
+                                  method="post" style="display: none;">
+                                @Html.AntiForgeryToken()
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@section Scripts {
+    <script>
+        function exportOrders() {
+            const status = document.querySelector('select[name="status"]').value;
+
+            $.ajax({
+                url: '/Admin/Orders/ExportToExcel',
+                type: 'POST',
+                data: { status: status },
+                success: function(data) {
+                    // Здесь можно реализовать скачивание файла
+                    toastr.info('Экспорт начат...');
+                }
+            });
+        }
+    </script>
+}
+
+@functions {
+    public string GetStatusColor(string status)
+    {
+        return status switch
+        {
+            "Новый" => "warning",
+            "В обработке" => "info",
+            "Выполнен" => "success",
+            "Отменен" => "danger",
+            _ => "secondary"
+        };
+    }
+}

@@ -1,0 +1,82 @@
+﻿<footer class="footer mt-auto bg-dark text-white pt-5 pb-4">
+    <div class="container">
+        <div class="row">
+            <!-- О магазине -->
+            <div class="col-lg-4 col-md-6 mb-4">
+                <h5 class="text-uppercase fw-bold mb-3">Alice Dress</h5>
+                <p class="text-muted">
+                    Современный интернет-магазин женской одежды.
+                    Мы предлагаем стильные и качественные вещи для уверенных в себе женщин.
+                </p>
+                <div class="social-links mt-3">
+                    <a href="#" class="text-white me-3"><i class="bi bi-instagram fs-5"></i></a>
+                    <a href="#" class="text-white me-3"><i class="bi bi-vk fs-5"></i></a>
+                    <a href="#" class="text-white me-3"><i class="bi bi-telegram fs-5"></i></a>
+                    <a href="#" class="text-white"><i class="bi bi-youtube fs-5"></i></a>
+                </div>
+            </div>
+
+            <!-- Быстрые ссылки -->
+            <div class="col-lg-2 col-md-6 mb-4">
+                <h6 class="text-uppercase fw-bold mb-3">Магазин</h6>
+                <ul class="list-unstyled">
+                    <li class="mb-2"><a asp-controller="Catalog" asp-action="Index" class="text-muted text-decoration-none">Каталог</a></li>
+                    <li class="mb-2"><a href="#" class="text-muted text-decoration-none">Новинки</a></li>
+                    <li class="mb-2"><a href="#" class="text-muted text-decoration-none">Бестселлеры</a></li>
+                    <li class="mb-2"><a href="#" class="text-muted text-decoration-none">Распродажа</a></li>
+                </ul>
+            </div>
+
+            <!-- Информация -->
+            <div class="col-lg-3 col-md-6 mb-4">
+                <h6 class="text-uppercase fw-bold mb-3">Информация</h6>
+                <ul class="list-unstyled">
+                    <li class="mb-2"><a asp-controller="Home" asp-action="Index" asp-fragment="delivery" class="text-muted text-decoration-none">Доставка и оплата</a></li>
+                    <li class="mb-2"><a href="#" class="text-muted text-decoration-none">Возврат и обмен</a></li>
+                    <li class="mb-2"><a href="#" class="text-muted text-decoration-none">Размерная сетка</a></li>
+                    <li class="mb-2"><a asp-controller="Home" asp-action="Index" asp-fragment="contacts" class="text-muted text-decoration-none">Контакты</a></li>
+                </ul>
+            </div>
+
+            <!-- Контакты -->
+            <div class="col-lg-3 col-md-6 mb-4">
+                <h6 class="text-uppercase fw-bold mb-3">Контакты</h6>
+                <ul class="list-unstyled">
+                    <li class="mb-2">
+                        <i class="bi bi-geo-alt me-2"></i>
+                        <span class="text-muted">г. Казань, ул. Четаева, д. 18а</span>
+                    </li>
+                    <li class="mb-2">
+                        <i class="bi bi-telephone me-2"></i>
+                        <span class="text-muted">+7 (922) 62-30-104</span>
+                    </li>
+                    <li class="mb-2">
+                        <i class="bi bi-envelope me-2"></i>
+                        <span class="text-muted">info@alicedress.ru</span>
+                    </li>
+                    <li class="mb-2">
+                        <i class="bi bi-clock me-2"></i>
+                        <span class="text-muted">Пн-Пт: 9:00-20:00</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <hr class="bg-light">
+
+        <div class="row pt-3">
+            <div class="col-md-6 text-center text-md-start">
+                <p class="mb-0">&copy; @DateTime.Now.Year Alice Dress. Все права защищены.</p>
+            </div>
+            <div class="col-md-6 text-center text-md-end">
+                <div class="payment-methods">
+                    <span class="me-2">Принимаем к оплате:</span>
+                    <i class="bi bi-credit-card me-1" title="Visa"></i>
+                    <i class="bi bi-credit-card-fill me-1" title="MasterCard"></i>
+                    <i class="bi bi-wallet2 me-1" title="МИР"></i>
+                    <i class="bi bi-phone" title="Apple Pay/Google Pay"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
